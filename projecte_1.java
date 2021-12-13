@@ -22,8 +22,8 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class projecte_1 {
-    static String[] proveidor = new String[100];
-    static int[] contprod= new int[100];
+    static String[] proveidor = new String[4];
+    static int[] contprod= new int[4];
     static final int MAXSTOCK=400;
 
     static Connection connectarBD = null;
@@ -284,15 +284,63 @@ public class projecte_1 {
     }
     
     static void consultarComandes() {
-        System.out.println("Consultar comanda");
-        
-        int[] numero={1,2,3,4};
-        String[] comanda={"Amazon", "Candelsa", "Vinzeo", "TechDataES"};
-               
-        for (int i=0;i<comanda.length;i++){
-           System.out.print(" "+comanda[i]);
-       }
+        llistatProductes();
+        maxim();
+        minim();
+        mitjana();
+
     }
+
+    static void llistatProductes() {
+        System.out.println("Llistat de Productes demanats");
+        for (int i = 0; i < proveidor.length; i++) {
+            System.out.println(proveidor[i] + ": " + contprod[i]);
+        }
+    }
+
+    static void maxim() {
+        System.out.println("\nProveidor mes sol·lisitat");
+        int max = contprod[0];
+        int imax = 0;
+
+        for (int i = 0; i < contprod.length; i++) {
+            if (contprod[i] > max) {
+                max = contprod[i];
+                imax = i;
+            }
+        }
+        System.out.println(proveidor[imax] + " se sol·lisiten : " + max);
+
+    }
+
+    static void minim() {
+        System.out.println("\nProveidor menys sol·lisitat");
+        int min = contprod[0];
+        int imin = 0;
+
+        for (int i = 0; i < contprod.length; i++) {
+            if (contprod[i] < min) {
+                min = contprod[i];
+                imin = i;
+            }
+        }
+        System.out.println(proveidor[imin] + " se sol·lisiten : " + min);
+    }
+
+    static void mitjana() {
+        System.out.println("\nMitjana de productes sol·lisitats");
+
+        double mitjana = 0, suma = 0;
+
+        for (int i = 0; i < contprod.length; i++) {
+            suma += contprod[i];
+
+        }
+        mitjana = suma / contprod.length;
+        System.out.println("La mitjana es " + mitjana + "\n");
+
+    }
+
 
     static void gestioProductes() throws SQLException {
         Scanner teclat = new Scanner(System.in);
